@@ -1,0 +1,53 @@
+<a href="/events/index">Event Dashboard</a>
+<div class="containers">
+
+<h2><%= @event.name %></h2>
+<p>Host : <%= @event.user.first_name %></p>
+<p>Date : <%= @event.date %></p>
+<p>Location : <%= @event.city %></p>
+<p>People who are joining the event : <%= @event.users_joined.count %></p>
+
+	
+<table class="table table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <td>Name</td>
+                <td>Location</td>
+                <td>State</td>
+
+            </tr>
+        </thead>
+        <tbody>
+        	<% @attendees.each do |user| %>
+                <tr>
+                    <td><%= user.first_name %> <%= user.last_name %></td>
+                    <td><%= user.city %></td>
+                    <td><%= user.state %></td>
+                </tr>
+            <% end %>
+        </tbody>
+    </table>
+	
+</div>
+
+<div class="containers" >
+    <div class="containers" >
+        <% @comments.each do |comment| %>
+        <p><%= comment.author %>: <%= comment.context %></p><hr>
+        <!-- <a href="comments/<%= comment.id %>" data-method="delete">Delete</a> -->
+        <% end %>
+    </div>
+
+
+    <form action="/comments/<%= @event.id %>" method="POST">
+        <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token%>">
+        <div class="form-group">
+            <label>Add Comment:</label>
+
+            <input class="form-control" type="text" name="context">
+        </div>
+        <button class="btn btn-outline-success" type="submit"> Submit Comments </button>
+    </form>
+    
+</div>
+ 
